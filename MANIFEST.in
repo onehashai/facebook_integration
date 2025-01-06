@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include facebook_integration *.css
+recursive-include facebook_integration *.csv
+recursive-include facebook_integration *.html
+recursive-include facebook_integration *.ico
+recursive-include facebook_integration *.js
+recursive-include facebook_integration *.json
+recursive-include facebook_integration *.md
+recursive-include facebook_integration *.png
+recursive-include facebook_integration *.py
+recursive-include facebook_integration *.svg
+recursive-include facebook_integration *.txt
+recursive-exclude facebook_integration *.pyc

@@ -1,0 +1,40 @@
+{
+ "actions": [],
+ "creation": "2021-03-26 12:29:00.062644",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "facebook_integration_settings_section"
+ ],
+ "fields": [
+  {
+   "fieldname": "facebook_integration_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Facebook Integration Settings"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2021-03-26 12:30:50.400523",
+ "modified_by": "Administrator",
+ "module": "Facebook Integration",
+ "name": "Facebook Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

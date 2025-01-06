@@ -1,0 +1,65 @@
+{
+ "actions": [],
+ "creation": "2021-03-31 15:15:17.852757",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "facebook_field_label",
+  "lead_field_label",
+  "facebook_fieldname",
+  "lead_fieldname",
+  "lead_field_type"
+ ],
+ "fields": [
+  {
+   "fieldname": "lead_fieldname",
+   "fieldtype": "Data",
+   "label": "Lead Fieldname",
+   "read_only": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "facebook_field_label",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Facebook Field Label",
+   "read_only": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "lead_field_label",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Lead Field Label",
+   "read_only": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "facebook_fieldname",
+   "fieldtype": "Data",
+   "label": "Facebook Fieldname",
+   "read_only": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "lead_field_type",
+   "fieldtype": "Data",
+   "label": "Lead Field Type",
+   "read_only": 1,
+   "set_only_once": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2021-04-05 12:18:10.739945",
+ "modified_by": "Administrator",
+ "module": "Facebook Integration",
+ "name": "Facebook Fields Map",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

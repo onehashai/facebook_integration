@@ -1,0 +1,69 @@
+{
+ "actions": [],
+ "autoname": "field:form_id",
+ "creation": "2021-03-31 15:16:15.547106",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "form_id",
+  "enabled",
+  "page_id",
+  "field_mapping"
+ ],
+ "fields": [
+  {
+   "fieldname": "form_id",
+   "fieldtype": "Data",
+   "label": "Form Id",
+   "read_only": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "page_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Page Id",
+   "read_only": 1
+  },
+  {
+   "fieldname": "field_mapping",
+   "fieldtype": "Table",
+   "label": "Field Mapping",
+   "options": "Facebook Fields Map"
+  },
+  {
+   "default": "0",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  }
+ ],
+ "in_create": 1,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-01-11 20:08:43.196840",
+ "modified_by": "Administrator",
+ "module": "Facebook Integration",
+ "name": "Facebook Forms",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
