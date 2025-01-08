@@ -10,44 +10,6 @@ import json
 import requests
 import os
 
-class FacebookIntegration(Document):
-    def before_save(self):
-        frappe.log_error(str(self))
-        with open(os.getcwd()+'/common_site_config.json', 'r') as f:
-            config = json.load(f)
-        facebook_config = config.get("facebook_config") if config.get("facebook_config") else {}
-        app_id = master_subscription_endpoint = master_domain = client_verify_token = facebook_verify_token = facebook_webhook_endpoint = None
-        if facebook_config:
-            app_id = facebook_config.get("facebook_app_id")
-            master_domain = facebook_config.get("master_domain")
-            master_subscription_endpoint = facebook_config.get("master_subscription_endpoint")
-            client_verify_token = facebook_config.get("client_verify_token")
-            facebook_verify_token = facebook_config.get("facebook_verify_token")
-            facebook_webhook_endpoint = facebook_config.get("facebook_webhook_endpoint")
-        changes = False
-        if self.app_id != app_id:
-            facebook_config["facebook_app_id"] = self.app_id
-            changes = True
-        if self.master_domain != master_domain:
-            facebook_config["master_domain"] = self.master_domain
-            changes = True
-        if self.master_subscription_endpoint != master_subscription_endpoint:
-            facebook_config["master_subscription_endpoint"] = self.master_subscription_endpoint
-            changes = True
-        if self.client_verify_token != client_verify_token:
-            facebook_config["client_verify_token"] = self.client_verify_token
-            changes = True
-        if self.facebook_verify_token != facebook_verify_token:
-            facebook_config["facebook_verify_token"] = self.facebook_verify_token
-            changes = True            
-        if self.facebook_webhook_endpoint != facebook_webhook_endpoint:
-            facebook_config["facebook_webhook_endpoint"] = self.facebook_webhook_endpoint
-            changes = True
-        if changes:
-            config["facebook_config"] = facebook_config
-        with open(os.getcwd()+'/common_site_config.json', 'w') as f:
-            json.dump(config, f, indent=1, sort_keys=True)
-
 @frappe.whitelist(allow_guest=True)
 def save_subscription(**kwargs):
     
@@ -193,5 +155,40 @@ def unsubscribe(**kwargs):
     except:
         frappe.log_error(frappe.get_traceback(), "Facebook Unsubscribe Error")
         return frappe.get_traceback()
-
-
+class FacebookIntegration(Document):
+    def before_save(self):
+        frappe.log_error(str(self))
+        with open(os.getcwd()+'/common_site_config.json', 'r') as f:
+            config = json.load(f)
+        facebook_config = config.get("facebook_config") if config.get("facebook_config") else {}
+        app_id = master_subscription_endpoint = master_domain = client_verify_token = facebook_verify_token = facebook_webhook_endpoint = None
+        if facebook_config:
+            app_id = facebook_config.get("facebook_app_id")
+            master_domain = facebook_config.get("master_domain")
+            master_subscription_endpoint = facebook_config.get("master_subscription_endpoint")
+            client_verify_token = facebook_config.get("client_verify_token")
+            facebook_verify_token = facebook_config.get("facebook_verify_token")
+            facebook_webhook_endpoint = facebook_config.get("facebook_webhook_endpoint")
+        changes = False
+        if self.app_id != app_id:
+            facebook_config["facebook_app_id"] = self.app_id
+            changes = True
+        if self.master_domain != master_domain:
+            facebook_config["master_domain"] = self.master_domain
+            changes = True
+        if self.master_subscription_endpoint != master_subscription_endpoint:
+            facebook_config["master_subscription_endpoint"] = self.master_subscription_endpoint
+            changes = True
+        if self.client_verify_token != client_verify_token:
+            facebook_config["client_verify_token"] = self.client_verify_token
+            changes = True
+        if self.facebook_verify_token != facebook_verify_token:
+            facebook_config["facebook_verify_token"] = self.facebook_verify_token
+            changes = True            
+        if self.facebook_webhook_endpoint != facebook_webhook_endpoint:
+            facebook_config["facebook_webhook_endpoint"] = self.facebook_webhook_endpoint
+            changes = True
+        if changes:
+            config["facebook_config"] = facebook_config
+        with open(os.getcwd()+'/common_site_config.json', 'w') as f:
+            json.dump(config, f, indent=1, sort_keys=True)
