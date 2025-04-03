@@ -1,4 +1,5 @@
 {
+ "_liked_by": "[\"vikram@onehash.ai\"]",
  "actions": [],
  "creation": "2021-03-10 12:43:40.507015",
  "doctype": "DocType",
@@ -55,7 +56,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-04-02 16:59:07.373343",
+ "modified": "2025-04-03 14:01:13.467671",
  "modified_by": "Administrator",
  "module": "Facebook Integration",
  "name": "Facebook Integration",
@@ -72,7 +73,9 @@
    "write": 1
   }
  ],
+ "read_only": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
+ "states": [],
  "track_changes": 1
 }
