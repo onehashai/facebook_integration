@@ -94,20 +94,20 @@ def save_subscription(**kwargs):
 def prolong_token(app_secret, short_user_token, user_id, client_domain, app_id):
     long_page_token = ""
     long_user_token = ""
-    frappe.log_error("app_secret", app_secret)
+    
     try:
         long_user_token = requests.get("https://graph.facebook.com/v10.0/oauth/access_token?grant_type=fb_exchange_token&client_id="
                             +app_id+"&client_secret="+app_secret+"&fb_exchange_token="+short_user_token)
-        frappe.log_error("long_user_token", long_user_token.text)
+        
         long_user_token = json.loads(long_user_token.text).get("access_token")
     except Exception as e:
-        frappe.log_error("Error occured while fetching facebook client: {} long-lived user token: ".format(client_domain) + frappe.get_traceback(), "Error Facebook Token")
+        frappe.log_error("Error Facebook Token", "Error occured while fetching facebook client: {} long-lived user token: ".format(client_domain) + frappe.get_traceback() )
     try:
         long_page_token = requests.get("https://graph.facebook.com/v10.0/"+user_id+"/accounts?access_token="+str(long_user_token))
-        frappe.log_error("long_page_token", json.loads(long_page_token.text))
+        
         long_page_token = json.loads(long_page_token.text)["data"][0]["access_token"]
     except Exception as e:
-        frappe.log_error("Error occured while fetching facebook client: {} long-lived page token: ".format(client_domain) + frappe.get_traceback(), "Error Facebook Token")
+        frappe.log_error("Error Facebook Token", "Error occured while fetching facebook client: {} long-lived page token: ".format(client_domain) + frappe.get_traceback())
 
     return long_page_token
 
@@ -130,7 +130,7 @@ def get_subscription(**kwargs):
                 data_dic[page] = forms_list
         return data_dic
     except:
-        frappe.log_error("Fetching Facebook Subscription Failed for Domain: {}\n".format(domain) + frappe.get_traceback(), "Facebook Subscription Fetch Error")
+        frappe.log_error("Facebook Subscription Fetch Error", "Fetching Facebook Subscription Failed for Domain: {}\n".format(domain) + frappe.get_traceback())
         return "error"
 
 @frappe.whitelist(allow_guest=True)
@@ -149,15 +149,15 @@ def unsubscribe(**kwargs):
                 client.save(ignore_permissions=True)
                 return "success"
             else:
-                frappe.log_error(json.loads(resp.text), "Facebook Unsubscribe Error")
+                frappe.log_error("Facebook Unsubscribe Error", json.loads(resp.text))
                 return "error"
         return "success"
     except:
-        frappe.log_error(frappe.get_traceback(), "Facebook Unsubscribe Error")
+        frappe.log_error( "Facebook Unsubscribe Error", frappe.get_traceback())
         return frappe.get_traceback()
 class FacebookIntegration(Document):
     def before_save(self):
-        frappe.log_error(str(self))
+        
         with open(os.getcwd()+'/common_site_config.json', 'r') as f:
             config = json.load(f)
         facebook_config = config.get("facebook_config") if config.get("facebook_config") else {}
