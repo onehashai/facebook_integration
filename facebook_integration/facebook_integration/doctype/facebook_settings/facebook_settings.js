@@ -64,7 +64,6 @@ frappe.ui.form.on('Facebook Settings', {
 				{ access_token: page_access_token, subscribed_fields: ['leadgen'] },
 				function (response) {
 					if (response && !response.error) {
-						console.log('Successfully subscribed page', [user_access_token, user_id, page_id, form_id, mapping_data, page_access_token]);
 						frappe.call({
 							method: "facebook_integration.facebook_integration.facebook_subscription.send_subscription",
 							args: {
@@ -72,7 +71,6 @@ frappe.ui.form.on('Facebook Settings', {
 								"user_access_token": user_access_token, "user_id": user_id, "field_mapping": mapping_data,
 							},
 							callback: function (r) {
-								console.log(r)
 								if (r.message == "success") {
 									frappe.hide_progress("Subscribing...")
 									frappe.msgprint("Page subscribed successfully.")
@@ -90,9 +88,8 @@ frappe.ui.form.on('Facebook Settings', {
 
 		function myFacebookLogin() {
 			if (frappe.user.has_role("System Manager")) {
-				console.log("Hi")
 				FB.login(function (response) {
-					console.log(response)
+					
 					if (response.authResponse) {
 						console.log('Successfully logged in');
 						user_access_token = response.authResponse.accessToken
@@ -108,6 +105,7 @@ frappe.ui.form.on('Facebook Settings', {
 								pages_name.push(page.name)
 								pages_list.push(page)
 							}
+							
 							var dialog = new frappe.ui.Dialog({
 								title: "Select Page to Subscribe",
 								fields: [
