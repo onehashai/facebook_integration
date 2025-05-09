@@ -94,20 +94,20 @@ def save_subscription(**kwargs):
 def prolong_token(app_secret, short_user_token, user_id, client_domain, app_id):
     long_page_token = ""
     long_user_token = ""
-    frappe.log_error("app_secret", app_secret)
+    
     try:
         long_user_token = requests.get("https://graph.facebook.com/v10.0/oauth/access_token?grant_type=fb_exchange_token&client_id="
                             +app_id+"&client_secret="+app_secret+"&fb_exchange_token="+short_user_token)
-        frappe.log_error("long_user_token", long_user_token.text)
+        
         long_user_token = json.loads(long_user_token.text).get("access_token")
     except Exception as e:
-        frappe.log_error("Error occured while fetching facebook client: {} long-lived user token: ".format(client_domain) + frappe.get_traceback(), "Error Facebook Token")
+        frappe.log_error("Error Facebook Token", "Error occured while fetching facebook client: {} long-lived user token: ".format(client_domain) + frappe.get_traceback() )
     try:
         long_page_token = requests.get("https://graph.facebook.com/v10.0/"+user_id+"/accounts?access_token="+str(long_user_token))
-        frappe.log_error("long_page_token", json.loads(long_page_token.text))
+        
         long_page_token = json.loads(long_page_token.text)["data"][0]["access_token"]
     except Exception as e:
-        frappe.log_error("Error occured while fetching facebook client: {} long-lived page token: ".format(client_domain) + frappe.get_traceback(), "Error Facebook Token")
+        frappe.log_error("Error Facebook Token", "Error occured while fetching facebook client: {} long-lived page token: ".format(client_domain) + frappe.get_traceback())
 
     return long_page_token
 
@@ -130,7 +130,7 @@ def get_subscription(**kwargs):
                 data_dic[page] = forms_list
         return data_dic
     except:
-        frappe.log_error("Fetching Facebook Subscription Failed for Domain: {}\n".format(domain) + frappe.get_traceback(), "Facebook Subscription Fetch Error")
+        frappe.log_error("Facebook Subscription Fetch Error", "Fetching Facebook Subscription Failed for Domain: {}\n".format(domain) + frappe.get_traceback())
         return "error"
 
 @frappe.whitelist(allow_guest=True)
@@ -149,46 +149,47 @@ def unsubscribe(**kwargs):
                 client.save(ignore_permissions=True)
                 return "success"
             else:
-                frappe.log_error(json.loads(resp.text), "Facebook Unsubscribe Error")
+                frappe.log_error("Facebook Unsubscribe Error", json.loads(resp.text))
                 return "error"
         return "success"
     except:
-        frappe.log_error(frappe.get_traceback(), "Facebook Unsubscribe Error")
+        frappe.log_error( "Facebook Unsubscribe Error", frappe.get_traceback())
         return frappe.get_traceback()
 class FacebookIntegration(Document):
-    def before_save(self):
-        frappe.log_error(str(self))
-        with open(os.getcwd()+'/common_site_config.json', 'r') as f:
-            config = json.load(f)
-        facebook_config = config.get("facebook_config") if config.get("facebook_config") else {}
-        app_id = master_subscription_endpoint = master_domain = client_verify_token = facebook_verify_token = facebook_webhook_endpoint = None
-        if facebook_config:
-            app_id = facebook_config.get("facebook_app_id")
-            master_domain = facebook_config.get("master_domain")
-            master_subscription_endpoint = facebook_config.get("master_subscription_endpoint")
-            client_verify_token = facebook_config.get("client_verify_token")
-            facebook_verify_token = facebook_config.get("facebook_verify_token")
-            facebook_webhook_endpoint = facebook_config.get("facebook_webhook_endpoint")
-        changes = False
-        if self.app_id != app_id:
-            facebook_config["facebook_app_id"] = self.app_id
-            changes = True
-        if self.master_domain != master_domain:
-            facebook_config["master_domain"] = self.master_domain
-            changes = True
-        if self.master_subscription_endpoint != master_subscription_endpoint:
-            facebook_config["master_subscription_endpoint"] = self.master_subscription_endpoint
-            changes = True
-        if self.client_verify_token != client_verify_token:
-            facebook_config["client_verify_token"] = self.client_verify_token
-            changes = True
-        if self.facebook_verify_token != facebook_verify_token:
-            facebook_config["facebook_verify_token"] = self.facebook_verify_token
-            changes = True            
-        if self.facebook_webhook_endpoint != facebook_webhook_endpoint:
-            facebook_config["facebook_webhook_endpoint"] = self.facebook_webhook_endpoint
-            changes = True
-        if changes:
-            config["facebook_config"] = facebook_config
-        with open(os.getcwd()+'/common_site_config.json', 'w') as f:
-            json.dump(config, f, indent=1, sort_keys=True)
+    pass
+    # def before_save(self):
+        
+    #     with open(os.getcwd()+'/common_site_config.json', 'r') as f:
+    #         config = json.load(f)
+    #     facebook_config = config.get("facebook_config") if config.get("facebook_config") else {}
+    #     app_id = master_subscription_endpoint = master_domain = client_verify_token = facebook_verify_token = facebook_webhook_endpoint = None
+    #     if facebook_config:
+    #         app_id = facebook_config.get("facebook_app_id")
+    #         master_domain = facebook_config.get("master_domain")
+    #         master_subscription_endpoint = facebook_config.get("master_subscription_endpoint")
+    #         client_verify_token = facebook_config.get("client_verify_token")
+    #         facebook_verify_token = facebook_config.get("facebook_verify_token")
+    #         facebook_webhook_endpoint = facebook_config.get("facebook_webhook_endpoint")
+    #     changes = False
+    #     if self.app_id != app_id:
+    #         facebook_config["facebook_app_id"] = self.app_id
+    #         changes = True
+    #     if self.master_domain != master_domain:
+    #         facebook_config["master_domain"] = self.master_domain
+    #         changes = True
+    #     if self.master_subscription_endpoint != master_subscription_endpoint:
+    #         facebook_config["master_subscription_endpoint"] = self.master_subscription_endpoint
+    #         changes = True
+    #     if self.client_verify_token != client_verify_token:
+    #         facebook_config["client_verify_token"] = self.client_verify_token
+    #         changes = True
+    #     if self.facebook_verify_token != facebook_verify_token:
+    #         facebook_config["facebook_verify_token"] = self.facebook_verify_token
+    #         changes = True            
+    #     if self.facebook_webhook_endpoint != facebook_webhook_endpoint:
+    #         facebook_config["facebook_webhook_endpoint"] = self.facebook_webhook_endpoint
+    #         changes = True
+    #     if changes:
+    #         config["facebook_config"] = facebook_config
+    #     with open(os.getcwd()+'/common_site_config.json', 'w') as f:
+    #         json.dump(config, f, indent=1, sort_keys=True)

@@ -62,7 +62,7 @@ def send_subscription(**kwargs):
         else:
             return "permission_error"
     except Exception as e:
-        frappe.log_error(frappe.get_traceback())
+        frappe.log_error("Send Subscription", frappe.get_traceback())
         return {"error1": frappe.get_traceback()}
 
 @frappe.whitelist()
@@ -98,7 +98,7 @@ def fetch_subscription():
         else:
             return "permission error"
     except:
-        frappe.log_error(frappe.get_traceback())
+        frappe.log_error("fetch subscription", frappe.get_traceback())
         return "error"
 
 @frappe.whitelist()
@@ -123,7 +123,7 @@ def unsubscribe(**kwargs):
         else:
             return "permission error"
     except:
-        frappe.log_error(frappe.get_traceback())
+        frappe.log_error("unsubscribe", frappe.get_traceback())
         return "error"
 
 @frappe.whitelist()
@@ -132,8 +132,8 @@ def fetch_app_id():
         if frappe.local.conf.facebook_config and frappe.local.conf.facebook_config.get("facebook_app_id"):
             return frappe.local.conf.facebook_config.get("facebook_app_id")
         else:
-            frappe.log_error("No Facebook App Id found in Facebook Integration", "Facebook AppId Error")
+            frappe.log_error("Facebook AppId Error", "No Facebook App Id found in Facebook Integration")
             return "error"
     except:
-        frappe.log_error("No Facebook App Id found in Facebook Integration", "Facebook AppId Error")
+        frappe.log_error("Facebook AppId Error", "No Facebook App Id found in Facebook Integration")
         return "error"
